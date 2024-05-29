@@ -54,4 +54,5 @@ jobs:
       run: vagrant --version
 
     - name: test
-      run: ./test.mjs
+      run: |
+        npm test
