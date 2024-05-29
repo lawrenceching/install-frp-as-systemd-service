@@ -51,7 +51,7 @@ jobs:
         sudo systemctl restart libvirtd
 
     - name: Show Vagrant version
-          run: vagrant --version
+      run: vagrant --version
 
     - name: Run vagrant up
       run: vagrant up ubuntu-2240.Vagrantfile
