@@ -17,7 +17,7 @@ describe('install.sh', async () => {
 
   beforeEach(async () => {
     await $`vagrant up`.nothrow()
-    await $`vagrant upload build.sh /tmp/build.sh`.nothrow()
+    await $`vagrant upload install.sh /tmp/install.sh`.nothrow()
   });
 
   afterEach(async () => {
@@ -29,11 +29,13 @@ describe('install.sh', async () => {
   // });
 
   it('wget is intalled, curl is not installed', async () => {
+    await $`vagrant ssh -c "apt-get remove curl"`.nothrow()
+    await $`vagrant ssh -c "apt-get remove wget"`.nothrow()
     await $`vagrant ssh -c "pwd"`.nothrow()
     await $`vagrant ssh -c "ls"`.nothrow()
     await $`vagrant ssh -c "curl"`.nothrow()
     await $`vagrant ssh -c "wget"`.nothrow()
-    await $`vagrant ssh -c "cat /tmp/build.sh"`.nothrow()
+    await $`vagrant ssh -c "cat /tmp/install.sh"`.nothrow()
     // assert.match(await run(), /frps and frpc are installed/);
   });
 });
