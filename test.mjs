@@ -1,17 +1,9 @@
 #!/usr/bin/env zx
 import 'zx/globals'
-import { describe, it, beforeEach, afterEach } from 'node:test';
+import { describe, it, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 
 $.verbose = true
-
-const containerName = 'test-container'
-
-async function run() {
-  const p = $`docker exec ${containerName} sh /install.sh`
-  await p.nothrow()
-  return await p.text()
-}
 
 describe('install.sh', async () => {
 
@@ -23,7 +15,7 @@ describe('install.sh', async () => {
     await $`vagrant ssh -c "pwd"`
   });
 
-  before(async () => {
+  after(async () => {
     await $`vagrant destroy -f`.nothrow()
   });
 
