@@ -3,10 +3,10 @@ Vagrant.configure("2") do |config|
 
     config.vm.define 'ubuntu-2204'
 
-    config.ssh.username = 'root'
+#     config.ssh.username = 'root'
 #     config.ssh.password = 'vagrant'
 #     config.ssh.insert_key = 'true'
-    
+#
     config.vm.provider "virtualbox" do |vb|
       # Customize the amount of memory on the VM:
       vb.memory = "1024"
