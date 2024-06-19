@@ -30,8 +30,8 @@ describe('install.sh', async () => {
 
   it('wget is intalled, curl is not installed', async () => {
     await $`vagrant ssh -c "sudo whoami"`.nothrow()
-    await $`vagrant ssh -c "apt-get remove curl"`.nothrow()
-    await $`vagrant ssh -c "apt-get remove wget"`.nothrow()
+    await $`vagrant ssh -c "sudo apt-get remove curl"`.nothrow()
+    await $`vagrant ssh -c "sudo apt-get remove wget"`.nothrow()
     await $`vagrant ssh -c "pwd"`.nothrow()
     await $`vagrant ssh -c "ls"`.nothrow()
     await $`vagrant ssh -c "curl"`.nothrow()
