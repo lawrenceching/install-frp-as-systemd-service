@@ -15,28 +15,33 @@ async function run() {
 
 describe('install.sh', async () => {
 
-  beforeEach(async () => {
-    await $`vagrant up`.nothrow()
-    await $`vagrant upload install.sh /tmp/install.sh`.nothrow()
+  before(async () => {
+    await $`vagrant up`
+    await $`vagrant upload install.sh /tmp/install.sh`
+    await $`vagrant ssh -c "cat /tmp/install.sh"`
+    await $`vagrant ssh -c "whoami"`
+    await $`vagrant ssh -c "pwd"`
   });
 
-  afterEach(async () => {
+  before(async () => {
     await $`vagrant destroy -f`.nothrow()
   });
 
-  // it('wget and curl are not available', async () => {
-  //   assert.match(await run(), /Neither wget nor curl is installed/);
-  // });
+  it('install successfully', async () => {
+    const stdout = await $`vagrant ssh -c "sudo bash /tmp/install.sh"`.nothrow().text()
+    assert.match(stdout, /frps and frpc are installed/)
+  });
 
-  it('wget is intalled, curl is not installed', async () => {
-    await $`vagrant ssh -c "sudo whoami"`.nothrow()
-    await $`vagrant ssh -c "sudo apt-get remove curl wget -y"`.nothrow()
-    await $`vagrant ssh -c "pwd"`.nothrow()
-    await $`vagrant ssh -c "ls"`.nothrow()
-    await $`vagrant ssh -c "curl"`.nothrow()
-    await $`vagrant ssh -c "wget"`.nothrow()
-    await $`vagrant ssh -c "cat /tmp/install.sh"`.nothrow()
-    // assert.match(await run(), /frps and frpc are installed/);
+  it('curl is installed, wget is not installed', async () => {
+    await $`vagrant ssh -c "sudo apt-get remove wget -y"`
+    const stdout = await $`vagrant ssh -c "sudo bash /tmp/install.sh"`.nothrow().text()
+    assert.match(stdout, /frps and frpc are installed/)
+  });
+
+  it('Neither wget nor curl is installed', async () => {
+    await $`vagrant ssh -c "sudo apt-get remove curl -y"`
+    const stdout = await $`vagrant ssh -c "sudo bash /tmp/install.sh"`.nothrow().text()
+    assert.match(stdout, /Neither wget nor curl is installed/)
   });
 });
 
