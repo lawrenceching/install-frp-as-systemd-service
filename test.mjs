@@ -1,13 +1,13 @@
 #!/usr/bin/env zx
 import 'zx/globals'
-import { describe, it, before, after } from 'node:test';
+import { describe, it, beforeEach, afterEach } from 'node:test';
 import assert from 'node:assert/strict';
 
 $.verbose = true
 
 describe('install.sh', async () => {
 
-  before(async () => {
+  beforeEach(async () => {
     await $`vagrant up`
     await $`vagrant upload install.sh /tmp/install.sh`
     await $`vagrant ssh -c "cat /tmp/install.sh"`
@@ -15,7 +15,7 @@ describe('install.sh', async () => {
     await $`vagrant ssh -c "pwd"`
   });
 
-  after(async () => {
+  afterEach(async () => {
     await $`vagrant destroy -f`.nothrow()
   });
 
