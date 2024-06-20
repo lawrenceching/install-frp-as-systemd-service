@@ -14,15 +14,15 @@ describe('install.sh', async () => {
     // await $`vagrant ssh -c "whoami"`
     // await $`vagrant ssh -c "pwd"`
   });
-  //
-  // afterEach(async () => {
-  //   await $`vagrant destroy -f`.nothrow()
-  // });
-  //
-  // it('install successfully', async () => {
-  //   const stdout = await $`vagrant ssh -c "sudo bash /tmp/install.sh"`.nothrow().text()
-  //   assert.match(stdout, /frps and frpc are installed/)
-  // });
+
+  afterEach(async () => {
+    await $`vagrant destroy -f`
+  });
+
+  it('install successfully', async () => {
+    const stdout = await $`vagrant ssh -c "sudo bash /tmp/install.sh"`.nothrow().text()
+    assert.match(stdout, /frps and frpc are installed/)
+  });
   //
   // it('curl is installed, wget is not installed', async () => {
   //   await $`vagrant ssh -c "sudo apt-get remove wget -y"`
@@ -36,9 +36,6 @@ describe('install.sh', async () => {
   //   assert.match(stdout, /Neither wget nor curl is installed/)
   // });
 
-    it('vagrant', async () => {
-      await $`vagrant ssh -c "echo HelloWorld"`
-    })
 });
 
 
