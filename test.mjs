@@ -7,13 +7,13 @@ $.verbose = true
 
 describe('install.sh', async () => {
 
-  // beforeEach(async () => {
-  //   await $`vagrant up`
-  //   await $`vagrant upload install.sh /tmp/install.sh`
-  //   await $`vagrant ssh -c "cat /tmp/install.sh"`
-  //   await $`vagrant ssh -c "whoami"`
-  //   await $`vagrant ssh -c "pwd"`
-  // });
+  beforeEach(async () => {
+    await $`vagrant up`
+    await $`vagrant upload install.sh /tmp/install.sh`
+    await $`vagrant ssh -c "cat /tmp/install.sh"`
+    // await $`vagrant ssh -c "whoami"`
+    // await $`vagrant ssh -c "pwd"`
+  });
   //
   // afterEach(async () => {
   //   await $`vagrant destroy -f`.nothrow()
@@ -37,9 +37,7 @@ describe('install.sh', async () => {
   // });
 
     it('vagrant', async () => {
-      await $`vagrant up`
-      await $`vagrant upload install.sh /tmp/install.sh`
-      await $`vagrant ssh -c "cat /tmp/install.sh"`
+      await $`vagrant ssh -c "echo HelloWorld"`
     })
 });
 
