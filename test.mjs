@@ -24,17 +24,17 @@ describe('install.sh', async () => {
     assert.match(stdout, /frps and frpc are installed/)
   });
 
-  // it('curl is installed, wget is not installed', async () => {
-  //   await $`vagrant ssh -c "sudo apt-get remove wget -y"`
-  //   const stdout = await $`vagrant ssh -c "sudo bash /tmp/install.sh"`.nothrow().text()
-  //   assert.match(stdout, /frps and frpc are installed/)
-  // });
-  //
-  // it('Neither wget nor curl is installed', async () => {
-  //   await $`vagrant ssh -c "sudo apt-get remove curl -y"`
-  //   const stdout = await $`vagrant ssh -c "sudo bash /tmp/install.sh"`.nothrow().text()
-  //   assert.match(stdout, /Neither wget nor curl is installed/)
-  // });
+  it('curl is installed, wget is not installed', async () => {
+    await $`vagrant ssh -c "sudo apt-get remove wget -y"`
+    const stdout = await $`vagrant ssh -c "sudo bash /tmp/install.sh"`.nothrow().text()
+    assert.match(stdout, /frps and frpc are installed/)
+  });
+
+  it('Neither wget nor curl is installed', async () => {
+    await $`vagrant ssh -c "sudo apt-get remove wget curl -y"`
+    const stdout = await $`vagrant ssh -c "sudo bash /tmp/install.sh"`.nothrow().text()
+    assert.match(stdout, /Neither wget nor curl is installed/)
+  });
 });
 
 
